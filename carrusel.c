@@ -142,6 +142,8 @@ dllista *insertar_en_carrusel(dllista *despues_de, DATO dato) {
         return despues_de;
 
     if (despues_de == NULL) {
+        nuevo->siguiente= nuevo;
+        nuevo->previo= nuevo;
         /* -------- COMPLETAR --------
          * El carrusel está vacío.
          * El nuevo nodo debe apuntar a sí mismo en ambos sentidos:
@@ -162,6 +164,10 @@ dllista *insertar_en_carrusel(dllista *despues_de, DATO dato) {
      *   despues_de->siguiente = ???
      * Cuidado con el orden de las asignaciones.
      * --------------------------- */
+    nuevo->siguiente = despues_de->siguiente;
+    nuevo->previo = despues_de;
+    despues_de->siguiente->previo = nuevo;
+    despues_de->siguiente = nuevo;
 
 
     return nuevo;
@@ -225,6 +231,11 @@ dllista *avanzar(dllista *seleccion, int n) {
  *  Retorna: el nodo en la nueva posición.
  */
 dllista *retroceder(dllista *seleccion, int n) {
+    if(seleccion=NULL)
+        return NULL;
+
+    for(i=0;i<n;i++)
+        seleccion = seleccion->previo
     /* -------- COMPLETAR --------
      * Recorre "n" veces usando seleccion->previo.
      * --------------------------- */
