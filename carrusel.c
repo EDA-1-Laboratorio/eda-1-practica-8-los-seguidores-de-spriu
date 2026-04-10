@@ -190,6 +190,19 @@ dllista *insertar_en_carrusel(dllista *despues_de, DATO dato) {
 dllista *eliminar_del_carrusel(dllista *objetivo) {
     if (objetivo == NULL)
         return NULL;
+    
+    if (objetivo->siguiente == objetivo) {
+        free(objetivo); // Asegúrate de que listadl.h incluye <stdlib.h>
+        return NULL;
+    }
+    dllista *siguiente_nodo = objetivo->siguiente;
+    
+    objetivo->previo->siguiente = objetivo->siguiente;
+    objetivo->siguiente->previo = objetivo->previo;
+    
+    free(objetivo);
+    
+    return siguiente_nodo;
 
     /* -------- COMPLETAR --------
      * Caso 1: solo hay un elemento (objetivo->siguiente == objetivo).
@@ -215,6 +228,12 @@ dllista *eliminar_del_carrusel(dllista *objetivo) {
  *  Retorna: el nodo en la nueva posición.
  */
 dllista *avanzar(dllista *seleccion, int n) {
+    if (seleccion == NULL) return NULL;
+    
+    for (int i = 0; i < n; i++) {
+        seleccion = seleccion->siguiente;
+    }
+    return seleccion;
     /* -------- COMPLETAR --------
      * Recorre "n" veces usando seleccion->siguiente.
      * --------------------------- */
