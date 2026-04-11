@@ -144,9 +144,21 @@ DATO calcular_nueva_cabeza(DATO cabeza_actual, int direccion) {
      *   IZQUIERDA -> c disminuye en 1
      *   DERECHA   -> c aumenta en 1
      * --------------------------- */
-
-
-
+     /* -------- COMPLETAR -------- */
+switch (direccion) {
+    case ARRIBA: 
+    f--; 
+    break;
+    case ABAJO:    
+    f++; 
+    break;
+    case IZQUIERDA:
+    c--; 
+    break;
+    case DERECHA: 
+    c++; 
+    break;
+}
     return POS(f, c);
 }
 
@@ -161,14 +173,10 @@ DATO calcular_nueva_cabeza(DATO cabeza_actual, int direccion) {
 int colision_pared(DATO posicion) {
     int f = FILA(posicion);
     int c = COL(posicion);
-
-    /* -------- COMPLETAR --------
-     * Retorna 1 si f o c están en el borde del tablero:
-     *   f <= 0, f >= FILAS-1, c <= 0, c >= COLUMNAS-1
-     * --------------------------- */
-
-
-    return 0; /* Sustituir por la condición correcta */
+    if(f<=0 || f>=FILAS-1 || c<=0 || c>=COLUMNAS-1) {
+        return 1;
+    }
+    return 0; 
 }
 
 /*
@@ -182,13 +190,10 @@ int colision_pared(DATO posicion) {
  *  Retorna: 1 si hay colisión, 0 si no.
  */
 int colision_cuerpo(ListaDL *vibora, DATO nueva_pos) {
-    /* -------- COMPLETAR --------
-     * Usa buscar(vibora, nueva_pos) para saber si la posición
-     * ya está ocupada por un segmento.
-     * --------------------------- */
-
-
-    return 0; /* Sustituir */
+    if (buscar(vibora,nueva_pos) !=-1) {
+        return 1;
+    }
+    return 0; 
 }
 
 /*
@@ -212,15 +217,13 @@ int colision_cuerpo(ListaDL *vibora, DATO nueva_pos) {
  */
 int mover_vibora(ListaDL *vibora, int direccion, DATO comida) {
     DATO nueva_pos = calcular_nueva_cabeza(vibora->cabeza->dato, direccion);
-
-    /* -------- COMPLETAR --------
-     * 1. Inserta nueva_pos al inicio de la lista.
-     * 2. Si nueva_pos == comida, retorna 1 (comió).
-     * 3. Si no, elimina el último elemento y retorna 0.
-     * --------------------------- */
-
-
-    return 0; /* Sustituir */
+    insertar_inicio(vibora, nueva_pos);
+    if (nueva_pos==comida) {
+        return 1; // Si comió
+    } else {
+      eliminar_final(vibora);
+      return 0; // No comió
+    }
 }
 
 /* ================================================================
